@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Portfolio</title>
+
+<style>
+
+/* Reset */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+/* Tokens */
+:root{
+--left-width:324px;
+--avatar-size:84px;
+--gap:8px;
+
+--info-top:28px;
+--info-x:49px;
+
+--font-main:"Roboto",-apple-system,BlinkMacSystemFont,"Microsoft YaHei","PingFang SC",sans-serif;
+}
+
+/* Base */
+body{
+font-family:var(--font-main);
+font-weight:400;
+background:#fff;
+color:#555;
+}
+
+/* Layout */
+.container{
+display:flex;
+height:100vh;
+}
+
+.left{
+width:var(--left-width);
+background:#fff;
+}
+
+.left-inner{
+padding:var(--info-top) var(--info-x);
+}
+
+.pro{
+display:flex;
+flex-direction:column;
+gap:42px;
+}
+
+/* Header */
+.pro-header{
+display:flex;
+flex-direction:column;
+gap:15px;
+}
+
+.avatar{
+width:var(--avatar-size);
+height:var(--avatar-size);
+background:#ddd;
+border-radius:50%;
+}
+
+.name-row{
+display:flex;
+gap:10px;
+align-items:center;
+}
+
+.name{
+font-size:20px;
+color:#000;
+}
+
+.age{
+width:32px;
+height:22px;
+background:#000;
+border-radius:6px;
+color:#fff;
+font-size:14px;
+display:flex;
+align-items:center;
+justify-content:center;
+
+  position:relative;
+  top:1px; 
+}
+
+.logo{
+display:flex;
+gap:5px;
+}
+
+.logo img{
+width:28px;
+height:28px;
+display:block;
+}
+
+/* Sections */
+.pro-section{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.text-title{
+font-weight:700;
+font-size:12px;
+color:#000;
+}
+
+.text-list{
+display:flex;
+flex-direction:column;
+gap:8px;
+}
+
+.pair3{
+display: flex;
+flex-direction: column;
+gap:24px;
+}
+
+.pair2{
+display:flex;
+gap:11px;
+align-items: center;
+}
+
+.pair1 img{
+width:21px;
+height:21px;
+display:block;
+}
+
+.pair{
+display:flex;
+flex-direction:column;
+gap:6px;
+}
+
+.text1{
+font-size:14px;
+}
+.text2{
+font-size:12px;
+}
+
+/* Right */
+.right{
+flex:1;
+background:#000;
+padding:var(--gap);
+overflow-y:auto;
+}
+
+.gallery{
+display:flex;
+flex-direction:column;
+gap:var(--gap);
+}
+
+.row{
+display:grid;
+gap:var(--gap);
+}
+
+.row img{
+width:100%;
+display:block;
+border-radius:6px;
+object-fit:cover;
+}
+
+.col1{grid-template-columns:1fr;}
+.col2{grid-template-columns:repeat(2,1fr);}
+.col3{grid-template-columns:repeat(3,1fr);}
+.col4{grid-template-columns:repeat(4,1fr);}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="left">
+<div class="left-inner">
+
+<div class="pro">
+
+  <div class="pro-header">
+    <div class="avatar"></div>
+    <div class="name-row">
+      <div class="name">得物志</div>
+      <div class="age">30</div>
+    </div>
+  </div>
+
+  <div class="logo">
+    <img src="img/figma.png">
+    <img src="img/AE.png">
+    <img src="img/C4D.png">
+    <img src="img/redshift.png">
+    <img src="img/rive.png">
+    <img src="img/houdini.png">
+    <img src="img/blender.png">
+  </div>
+
+  <div class="pro-section">
+    <div class="text-title">技能</div>
+    <div class="text-list">
+        <div class="text1">Motion Designer</div>
+        <div class="text1">Rive Animation</div>
+        <div class="text1">Procedural Motion</div>
+    </div>
+  </div>
+
+  <div class="pro-section">
+    <div class="text-title">技能</div>
+    <div class="pair3">
+
+      <div class="pair2">
+      <div class="pair1"><img src="img/Component 1.png" alt=""></div>
+      <div class="pair">
+        <div class="text2">Motion Designer</div>
+        <div class="text1">Motion Designer</div>
+      </div>
+    </div>
+
+      <div class="pair2">
+      <div class="pair1"><img src="img/Component 1.png" alt=""></div>
+      <div class="pair">
+        <div class="text2">Motion Designer</div>
+        <div class="text1">Motion Designer</div>
+      </div>
+    </div>
+
+      <div class="pair2">
+      <div class="pair1"><img src="img/Component 1.png" alt=""></div>
+      <div class="pair">
+        <div class="text2">Motion Designer</div>
+        <div class="text1">Motion Designer</div>
+      </div>
+    </div>
+
+      <div class="pair2">
+      <div class="pair1"><img src="img/Component 1.png" alt=""></div>
+      <div class="pair">
+        <div class="text2">Motion Designer</div>
+        <div class="text1">Motion Designer</div>
+      </div>
+    </div>
+
+  </div>
+  </div>
+
+  <div class="pro-section">
+    <div class="text-title">技能</div>
+    <div class="text-list">
+        <div class="text1">Motion Designer</div>
+        <div class="text1">Rive Animation</div>
+        <div class="text1">Procedural Motion</div>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<div class="right">
+<div class="gallery">
+
+<div class="row col4">
+<img src="img/123.png">
+<img src="img/234.png">
+<img src="img/345.png">
+<img src="img/456.png">
+</div>
+
+<div class="row col1">
+<img src="https://picsum.photos/1200/600?2">
+</div>
+
+<div class="row col2">
+<img src="https://picsum.photos/1200/600?3">
+<img src="https://picsum.photos/1200/600?4">
+</div>
+
+<div class="row col1">
+<img src="https://picsum.photos/1200/600?5">
+</div>
+
+<div class="row col1">
+<img src="https://picsum.photos/1200/600?6">
+</div>
+
+</div>
+</div>
+
+</div>
+
+</body>
+</html>
