@@ -1,317 +1,576 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Portfolio</title>
-
-<style>
-
-/* Reset */
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-/* Tokens */
-:root{
---left-width:324px;
---avatar-size:84px;
---gap:8px;
-
---info-top:28px;
---info-x:49px;
-
---font-main:"Roboto",-apple-system,BlinkMacSystemFont,"Microsoft YaHei","PingFang SC",sans-serif;
-}
-
-/* Base */
-body{
-font-family:var(--font-main);
-font-weight:400;
-background:#fff;
-color:#555;
-}
-
-/* Layout */
-.container{
-display:flex;
-height:100vh;
-}
-
-.left{
-width:var(--left-width);
-background:#fff;
-}
-
-.left-inner{
-padding:var(--info-top) var(--info-x);
-}
-
-.pro{
-display:flex;
-flex-direction:column;
-gap:42px;
-}
-
-/* Header */
-.pro-header{
-display:flex;
-flex-direction:column;
-gap:15px;
-}
-
-.avatar{
-width:var(--avatar-size);
-height:var(--avatar-size);
-background:#ddd;
-border-radius:50%;
-}
-
-.name-row{
-display:flex;
-gap:10px;
-align-items:center;
-}
-
-.name{
-font-size:20px;
-color:#000;
-}
-
-.age{
-width:32px;
-height:22px;
-background:#000;
-border-radius:6px;
-color:#fff;
-font-size:14px;
-display:flex;
-align-items:center;
-justify-content:center;
-
-  position:relative;
-  top:1px; 
-}
-
-.logo{
-display:flex;
-gap:5px;
-}
-
-.logo img{
-width:28px;
-height:28px;
-display:block;
-}
-
-/* Sections */
-.pro-section{
-display:flex;
-flex-direction:column;
-gap:10px;
-}
-
-.text-title{
-font-weight:700;
-font-size:12px;
-color:#000;
-}
-
-.text-list{
-display:flex;
-flex-direction:column;
-gap:8px;
-}
-
-.pair3{
-display: flex;
-flex-direction: column;
-gap:24px;
-}
-
-.pair2{
-display:flex;
-gap:11px;
-align-items: center;
-}
-
-.pair1 img{
-width:21px;
-height:21px;
-display:block;
-}
-
-.pair{
-display:flex;
-flex-direction:column;
-gap:6px;
-}
-
-.text1{
-font-size:14px;
-}
-.text2{
-font-size:12px;
-}
-
-/* Right */
-.right{
-flex:1;
-background:#000;
-padding:var(--gap);
-overflow-y:auto;
-}
-
-.gallery{
-display:flex;
-flex-direction:column;
-gap:var(--gap);
-}
-
-.row{
-display:grid;
-gap:var(--gap);
-}
-
-.row img{
-width:100%;
-display:block;
-border-radius:6px;
-object-fit:cover;
-}
-
-.col1{grid-template-columns:1fr;}
-.col2{grid-template-columns:repeat(2,1fr);}
-.col3{grid-template-columns:repeat(3,1fr);}
-.col4{grid-template-columns:repeat(4,1fr);}
-
-</style>
-
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <div class="container">
 
-<div class="left">
-<div class="left-inner">
+  <!-- LEFT -->
+  <div class="left">
+    <div class="left-inner">
 
-<div class="pro">
+      <div class="pro">
 
-  <div class="pro-header">
-    <div class="avatar"></div>
-    <div class="name-row">
-      <div class="name">得物志</div>
-      <div class="age">30</div>
-    </div>
-  </div>
+        <div class="pro-header">
+          <div class="avatar"><img src="img/tou.png"></div>
+          <div class="name-row">
+            <div class="name">黎小凤</div>
+            <div class="age">39</div>
+          </div>
+        </div>
 
-  <div class="logo">
-    <img src="img/figma.png">
-    <img src="img/AE.png">
-    <img src="img/C4D.png">
-    <img src="img/redshift.png">
-    <img src="img/rive.png">
-    <img src="img/houdini.png">
-    <img src="img/blender.png">
-  </div>
+        <div class="logo">
+          <div class="icon"><img src="img/figma.png"></div>
+          <div class="icon"><img src="img/AE.png"></div>
+          <div class="icon"><img src="img/C4D.png"></div>
+          <div class="icon"><img src="img/redshift.png"></div>
+          <div class="icon"><img src="img/rive.png"></div>
+          <div class="icon"><img src="img/houdini.png"></div>
+          <div class="icon"><img src="img/blender.png"></div>
+        </div>
 
-  <div class="pro-section">
-    <div class="text-title">技能</div>
-    <div class="text-list">
-        <div class="text1">Motion Designer</div>
-        <div class="text1">Rive Animation</div>
-        <div class="text1">Procedural Motion</div>
-    </div>
-  </div>
+        <div class="pro-section">
+          <div class="text-title">岗位</div>
+          <div class="text-list">
+            <div class="text1">Ui / Ux</div>
+            <div class="text1">动效设计</div>
+            <div class="text1">3D渲染 / 视觉设计</div>
+          </div>
+        </div>
 
-  <div class="pro-section">
-    <div class="text-title">技能</div>
-    <div class="pair3">
+        <div class="pro-section">
+          <div class="text-title">工作经历</div>
 
-      <div class="pair2">
-      <div class="pair1"><img src="img/Component 1.png" alt=""></div>
-      <div class="pair">
-        <div class="text2">Motion Designer</div>
-        <div class="text1">Motion Designer</div>
+          <div class="pair3">
+
+            <div class="pair2">
+              <div class="pair1"><img src="img/Component 1.png"></div>
+              <div class="pair">
+                <div class="text1">暗物智能科技 (深圳) 有限公司</div>
+                <div class="text2">2022/08-2025/11</div>
+              </div>
+            </div>
+
+            <div class="pair2">
+              <div class="pair1"><img src="img/Component 1.png"></div>
+              <div class="pair">
+                <div class="text1">中兴通讯-努比亚技术有限公司</div>
+                <div class="text2">2017.09-2022.06</div>
+              </div>
+            </div>
+
+            <div class="pair2">
+              <div class="pair1"><img src="img/Component 1.png"></div>
+              <div class="pair">
+                <div class="text1">深圳市前海大数据服务有限公司</div>
+                <div class="text2">2010.05-2017.08</div>
+              </div>
+            </div>
+
+            <div class="pair2">
+              <div class="pair1"><img src="img/Component 1.png"></div>
+              <div class="pair">
+                <div class="text1">深圳先得利精密探针（实习）</div>
+                <div class="text2">2009.02 - 2010.02</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="pro-section">
+          <div class="text-title">学历</div>
+          <div class="text-list">
+            <div class="text1">深圳大学 / 动漫设计</div>
+            <div class="text1">统招本科</div>
+            <div class="text1">2005.9-2009.6</div>
+          </div>
+        </div>
+
       </div>
-    </div>
 
-      <div class="pair2">
-      <div class="pair1"><img src="img/Component 1.png" alt=""></div>
-      <div class="pair">
-        <div class="text2">Motion Designer</div>
-        <div class="text1">Motion Designer</div>
-      </div>
-    </div>
-
-      <div class="pair2">
-      <div class="pair1"><img src="img/Component 1.png" alt=""></div>
-      <div class="pair">
-        <div class="text2">Motion Designer</div>
-        <div class="text1">Motion Designer</div>
-      </div>
-    </div>
-
-      <div class="pair2">
-      <div class="pair1"><img src="img/Component 1.png" alt=""></div>
-      <div class="pair">
-        <div class="text2">Motion Designer</div>
-        <div class="text1">Motion Designer</div>
-      </div>
-    </div>
-
-  </div>
-  </div>
-
-  <div class="pro-section">
-    <div class="text-title">技能</div>
-    <div class="text-list">
-        <div class="text1">Motion Designer</div>
-        <div class="text1">Rive Animation</div>
-        <div class="text1">Procedural Motion</div>
     </div>
   </div>
 
-</div>
-</div>
+  <!-- RIGHT -->
+  <div class="right">
+    <div class="right-inner">
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <div class="tabs-inner">
+
+          <div class="tabs-track">
+            <div class="tab active" data-tab="flowai">FlowAI</div>
+            <div class="tab" data-tab="canvasai">CanvasAI</div>
+            <div class="tab" data-tab="visual">RecordAI</div>
+            <div class="tab" data-tab="camera">Camera</div>
+            <div class="tab" data-tab="ux">红魔动效</div>
+            <div class="tab" data-tab="ui">游戏时间UI</div>
+            <div class="tab" data-tab="3d">3D渲染</div>
+            <div class="tab" data-tab="dashboard">大屏数据</div>
+            <div class="tab-indicator"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="content">
+
+        <!-- 3D -->
+        <div class="tools" data-tools="3d">
+          <div class="tools2">使用软件：</div>
+          <div class="tools2">Photoshop</div>
+          <div class="tools2">Cinema 4D</div>
+          <div class="tools2">Redshift</div>
+          <div class="tools2">Stable Diffusion</div>
+        </div>
+
+        <div class="gallery tab-content" id="3d">
+
+          <div class="row col1"><img src="img/3d-01.webp"></div>
+          <div class="row col1"><img src="img/3d-02.webp"></div>
+          <div class="row col1"><img src="img/3d-03.webp"></div>
+          <div class="row col1"><img src="img/3d-03a.webp"></div>
+          <div class="row col1"><img src="img/3d-04.webp"></div>
+          <div class="row col1"><img src="img/3d-05.webp"></div>
+
+          <div class="row col2">
+            <img src="img/3d-06.webp">
+            <img src="img/3d-07.webp">
+          </div>
+
+          <div class="row col1"><img src="img/3d-08.webp"></div>
+          <div class="row col1"><img src="img/3d-09.webp"></div>
+          <div class="row col1"><img src="img/3d-10.webp"></div>
+          <div class="row col1"><img src="img/3d-11.webp"></div>
+          <div class="row col1"><img src="img/3d-12.jpg"></div>
+          <div class="row col1"><img src="img/3d-13.webp"></div>
+          <div class="row col1"><img src="img/3d-14.webp"></div>
+          <div class="row col1"><img src="img/3d-15.webp"></div>
+
+        </div>
+
+        <!-- UX -->
+ 
+
+        <div class="gallery tab-content" id="ux">
+
+          <div class="block">
+          <div class="block-tools">
+          <div class="tools2">红魔原生充电动效</div>
+          <div class="tools2">（使用软件：</div>
+          <div class="tools2">Figma</div>
+          <div class="tools2">AfterEffects）</div>
+        </div>
+            <div class="row col3">
+              <video autoplay loop muted playsinline>
+                <source src="video/charge-01.webm" type="video/webm">
+              </video>
+              <video autoplay loop muted playsinline>
+                <source src="video/charge-02.webm" type="video/webm">
+              </video>
+              <video autoplay loop muted playsinline>
+                <source src="video/charge-03.webm" type="video/webm">
+              </video>
+            </div>
+          </div>
+
+          <div class="block">
+            <div class="block-tools">
+              <div class="tools2">红魔游戏性能分配</div>
+              <div class="tools2">（使用软件：</div>
+              <div class="tools2">Figma</div>
+              <div class="tools2">AfterEffects）</div>
+            </div>
+            <div class="row col1">
+              <video autoplay loop muted playsinline>
+                <source src="video/gamecpu.webm" type="video/webm">
+              </video>
+            </div>
+          </div>
+
+          <div class="block">
+            <div class="block-tools">
+              <div class="tools2">红魔游戏空间开机</div>
+              <div class="tools2">（使用软件：</div>
+              <div class="tools2">Cinema 4D</div>
+              <div class="tools2">Redshift</div>
+              <div class="tools2">AfterEffects）</div>
+            </div>
+            <div class="row col1">
+              <video autoplay loop muted playsinline>
+                <source src="video/Game-Intro.webm" type="video/webm">
+              </video>
+            </div>
+          </div>
+
+          <div class="block">
+            <div class="block-tools">
+              <div class="tools2">红魔游戏启动加速</div>
+              <div class="tools2">（使用软件：</div>
+              <div class="tools2">Figma</div>
+              <div class="tools2">AfterEffects）</div>
+            </div>
+            <div class="row col1">
+              <video autoplay loop muted playsinline>
+                <source src="video/gameturbo.webm" type="video/webm">
+              </video>
+            </div>
+          </div>
+
+          <div class="block">
+            <div class="block-tools">
+              <div class="tools2">红魔联合机甲充电动效/动态壁纸</div>
+              <div class="tools2">（使用软件：</div>
+              <div class="tools2">Cinema 4D</div>
+              <div class="tools2">Redshift</div>
+              <div class="tools2">AfterEffects）</div>
+            </div>
+            <div class="row col3">
+              <video autoplay loop muted playsinline>
+                <source src="video/charge-04.webm" type="video/webm">
+              </video>
+              <video autoplay loop muted playsinline>
+                <source src="video/charge-05.webm" type="video/webm">
+              </video>
+              <video autoplay loop muted playsinline>
+                <source src="video/m08.webm" type="video/webm">
+              </video>
+            </div>
+          </div>
+
+          <div class="block">
+            <div class="block-tools">
+              <div class="tools2">红魔风扇散热动效/电流充电动效</div>
+              <div class="tools2">（使用软件：</div>
+              <div class="tools2">Figma</div>
+              <div class="tools2">AfterEffects）</div>
+            </div>
+            <div class="row col2">
+              <video autoplay loop muted playsinline>
+                <source src="video/fan01.webm" type="video/webm">
+              </video>
+              <video autoplay loop muted playsinline>
+                <source src="video/charge-06.webm" type="video/webm">
+              </video>
+            </div>
+          </div>
+
+          <div class="block">
+            <div class="block-tools">
+              <div class="tools2">红魔Mora充电动效</div>
+              <div class="tools2">（使用软件：</div>
+              <div class="tools2">Cinema 4D</div>
+              <div class="tools2">Redshift</div>
+              <div class="tools2">AfterEffects</div>
+              <div class="tools2">Houdini）</div>
+            </div>
+            <div class="row col3">
+              <video autoplay loop muted playsinline>
+                <source src="video/mora-03.webm" type="video/webm">
+              </video>
+              <video autoplay loop muted playsinline>
+                <source src="video/mora-04.webm" type="video/webm">
+              </video>
+              <video autoplay loop muted playsinline>
+                <source src="video/mora-05.webm" type="video/webm">
+              </video>
+            </div>
+          </div>
+
+          <div class="block">
+            <div class="block-tools">
+              <div class="tools2">红魔Mora角色展示</div>
+              <div class="tools2">（使用软件：</div>
+              <div class="tools2">Figma</div>
+              <div class="tools2">Unity 3d</div>
+              <div class="tools2">AfterEffects）</div>
+            </div>
+            <div class="row col1">
+              <video autoplay loop muted playsinline>
+                <source src="video/mora-02.webm" type="video/webm">
+              </video>
+            </div>
+          </div>
+
+          <div class="block">
+            <div class="block-tools">
+              <div class="tools2">红魔Mora成就获得动效</div>
+              <div class="tools2">（使用软件：</div>
+              <div class="tools2">Figma</div>
+              <div class="tools2">Unity 3d</div>
+              <div class="tools2">AfterEffects）</div>
+            </div>
+            <div class="row col1">
+              <video autoplay loop muted playsinline>
+                <source src="video/mora-01.webm" type="video/webm">
+              </video>
+            </div>
+          </div>
+
+
+
+
+
+
+
+       
+
+        </div>
+
+        <!-- UI -->
+        <div class="tools" data-tools="ui">
+          <div class="tools2">游戏时间UI</div>
+        </div>
+
+        <div class="gallery tab-content" id="ui">
+          <div class="row col4">
+            <img src="img/gameui01.webp">
+            <img src="img/gameui02.webp">
+            <img src="img/gameui03.webp">
+            <img src="img/gameui03.webp">
+          </div>
+        </div>
+
+        <!-- RecordAI -->
+        <div class="tools" data-tools="visual">
+          <div class="tools2">RecordAI</div>
+        </div>
+
+        <div class="gallery tab-content" id="visual">
+          <div class="row col4 visual-grid">
+            <img src="img/Record00.png" alt="">
+            <img src="img/Record01.png" alt="">
+            <img src="img/Record02.png" alt="">
+            <img src="img/Record03.png" alt="">
+            <img src="img/Record04.png" alt="">
+            <img src="img/Record05.png" alt="">
+            <img src="img/Record06.png" alt="">
+            <img src="img/Record07.png" alt="">
+            <img src="img/Record08.png" alt="">
+            <img src="img/Record09.png" alt="">
+            <img src="img/Record10.png" alt="">
+            <img src="img/Record11.png" alt="">
+            <img src="img/Record12.png" alt="">
+            <img src="img/Record13.png" alt="">
+            <img src="img/Record14.png" alt="">
+            <img src="img/Record15.png" alt="">
+            <img src="img/Record16.png" alt="">
+            <img src="img/Record17.png" alt="">
+            <img src="img/Record18.png" alt="">
+            <img src="img/Record19.png" alt="">
+            <img src="img/Record20.png" alt="">
+          </div>
+        </div>
+
+        <!-- Camera -->
+        <div class="tools" data-tools="camera">
+          <div class="tools2">Camera</div>
+        </div>
+
+        <div class="gallery tab-content" id="camera">
+          <div class="row col4 visual-grid">
+            <img src="img/Camera01.png" alt="">
+            <img src="img/Camera02.png" alt="">
+            <img src="img/Camera03.png" alt="">
+            <img src="img/Camera04.png" alt="">
+            <img src="img/Camera05.png" alt="">
+            <img src="img/Camera06.png" alt="">
+            <img src="img/Camera07.png" alt="">
+            <img src="img/Camera08.png" alt="">
+            <img src="img/Camera09.png" alt="">
+            <img src="img/Camera10.png" alt="">
+            <img src="img/Camera11.png" alt="">
+            <img src="img/Camera12.png" alt="">
+            <img src="img/Camera13.png" alt="">
+            <img src="img/Camera14.png" alt="">
+            <img src="img/Camera15.png" alt="">
+            <img src="img/Camera16.png" alt="">
+            <img src="img/Camera17.png" alt="">
+            <img src="img/Camera18.png" alt="">
+            <img src="img/Camera19.png" alt="">
+            <img src="img/Camera20.png" alt="">
+            <img src="img/Camera21.png" alt="">
+            <img src="img/Camera22.png" alt="">
+            <img src="img/Camera23.png" alt="">
+            <img src="img/Camera24.png" alt="">
+          </div>
+        </div>
+
+        <!-- FlowAI -->
+        <div class="tools" data-tools="flowai">
+          <div class="tools2">FlowAI</div>
+        </div>
+
+        <div class="gallery tab-content active" id="flowai">
+          <div class="flowai-marquee" aria-label="FlowAI icon loop">
+            <div class="flowai-marquee-track">
+              <img src="img/C00Group%20371.png" alt="">
+              <img src="img/C01voiceing.png" alt="">
+              <img src="img/C02Volume.png" alt="">
+              <img src="img/C03copy.png" alt="">
+              <img src="img/C04down.png" alt="">
+              <img src="img/C05down-1.png" alt="">
+              <img src="img/C06up.png" alt="">
+              <img src="img/C07up-1.png" alt="">
+              <img src="img/C08newchat.png" alt="">
+              <img src="img/C09tab.png" alt="">
+              <img src="img/C10volumeclose.png" alt="">
+              <img src="img/C11volumeopen.png" alt="">
+              <img src="img/C12setting.png" alt="">
+              <img src="img/C13search.png" alt="">
+              <img src="img/C14extend.png" alt="">
+              <img src="img/C15extend-1.png" alt="">
+              <img src="img/C16Collapse.png" alt="">
+              <img src="img/C17Collapse-1.png" alt="">
+              <img src="img/C18Pin%20to%20Bottom.png" alt="">
+              <img src="img/C19voice.png" alt="">
+              <img src="img/C20keybord.png" alt="">
+              <img src="img/C21send.png" alt="">
+              <img src="img/C22pause.png" alt="">
+              <img src="img/C23Group%20393.png" alt="">
+              <img src="img/C24Group%20394.png" alt="">
+              <img src="img/C25chat1.png" alt="">
+              <img src="img/C26chat2.png" alt="">
+              <img src="img/C00Group%20371.png" alt="">
+              <img src="img/C01voiceing.png" alt="">
+              <img src="img/C02Volume.png" alt="">
+              <img src="img/C03copy.png" alt="">
+              <img src="img/C04down.png" alt="">
+              <img src="img/C05down-1.png" alt="">
+              <img src="img/C06up.png" alt="">
+              <img src="img/C07up-1.png" alt="">
+              <img src="img/C08newchat.png" alt="">
+              <img src="img/C09tab.png" alt="">
+              <img src="img/C10volumeclose.png" alt="">
+              <img src="img/C11volumeopen.png" alt="">
+              <img src="img/C12setting.png" alt="">
+              <img src="img/C13search.png" alt="">
+              <img src="img/C14extend.png" alt="">
+              <img src="img/C15extend-1.png" alt="">
+              <img src="img/C16Collapse.png" alt="">
+              <img src="img/C17Collapse-1.png" alt="">
+              <img src="img/C18Pin%20to%20Bottom.png" alt="">
+              <img src="img/C19voice.png" alt="">
+              <img src="img/C20keybord.png" alt="">
+              <img src="img/C21send.png" alt="">
+              <img src="img/C22pause.png" alt="">
+              <img src="img/C23Group%20393.png" alt="">
+              <img src="img/C24Group%20394.png" alt="">
+              <img src="img/C25chat1.png" alt="">
+              <img src="img/C26chat2.png" alt="">
+            </div>
+          </div>
+
+          <div class="row col4 visual-grid flowai-grid">
+            <div class="flowai-rive">
+              <canvas
+                class="rive-canvas"
+                data-rive-src=".riv/flowos_ai.riv"
+                data-rive-artboard="FlowosAi"
+                data-rive-state-machine="State Machine 1"
+              ></canvas>
+            </div>
+            <div class="flowai-rive">
+              <canvas
+                class="rive-canvas"
+                data-rive-src=".riv/glow.riv"
+                data-rive-artboard="cccc"
+                data-rive-state-machine="cccc"
+              ></canvas>
+            </div>
+            <img src="img/H01.png" alt="">
+            <img src="img/H02.png" alt="">
+            <img src="img/H03.png" alt="">
+            <img src="img/H04.png" alt="">
+            <img src="img/H05.png" alt="">
+            <img src="img/H06.png" alt="">
+            <img src="img/H07.png" alt="">
+            <img src="img/H08.png" alt="">
+            <img src="img/H09.png" alt="">
+            <img src="img/H10.png" alt="">
+            <img src="img/H11.png" alt="">
+          </div>
+        </div>
+
+        <!-- CanvasAI -->
+        <div class="tools" data-tools="canvasai">
+          <div class="tools2">CanvasAI</div>
+        </div>
+
+        <div class="gallery tab-content" id="canvasai">
+          <div class="row col4 visual-grid canvasai-grid">
+            <img src="img/AICanvas00.png" alt="">
+            <img src="img/AICanvas01.png" alt="">
+            <img src="img/AICanvas02.png" alt="">
+            <img src="img/AICanvas03.png" alt="">
+            <img src="img/AICanvas04.png" alt="">
+            <img src="img/AICanvas05.png" alt="">
+            <img src="img/AICanvas06.png" alt="">
+            <img src="img/AICanvas07.png" alt="">
+            <img src="img/AICanvas08.png" alt="">
+            <img src="img/AICanvas09.png" alt="">
+            <img src="img/AICanvas10.png" alt="">
+            <img src="img/AICanvas11.png" alt="">
+            <img src="img/AICanvas12.png" alt="">
+            <img src="img/AICanvas13.png" alt="">
+            <img src="img/AICanvas14.png" alt="">
+            <img src="img/AICanvas15.png" alt="">
+            <img src="img/AICanvas16.png" alt="">
+            <img src="img/AICanvas17.png" alt="">
+            <img src="img/AICanvas18.png" alt="">
+            <img src="img/AICanvas19.png" alt="">
+          </div>
+        </div>
+
+        <!-- 大屏数据 -->
+        <div class="tools" data-tools="dashboard">
+          <div class="tools2">大屏数据</div>
+        </div>
+
+        <div class="gallery tab-content" id="dashboard">
+          <div class="row col1 dashboard-grid">
+            <video autoplay loop muted playsinline>
+              <source src="video/Home.webm" type="video/webm">
+            </video>
+            <img src="img/Home02.png" alt="">
+            <img src="img/Home03.png" alt="">
+            <img src="img/Home04.png" alt="">
+            <img src="img/Home05.png" alt="">
+            <img src="img/Home06.png" alt="">
+            <img src="img/Home07.png" alt="">
+            <img src="img/Home08.png" alt="">
+            <img src="img/Home09.png" alt="">
+            <img src="img/Home10.png" alt="">
+            <img src="img/Home11.png" alt="">
+            <img src="img/Home12.png" alt="">
+            <img src="img/Home13.png" alt="">
+            <img src="img/Home14.png" alt="">
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
 </div>
 
-<div class="right">
-<div class="gallery">
-
-<div class="row col4">
-<img src="img/123.png">
-<img src="img/234.png">
-<img src="img/345.png">
-<img src="img/456.png">
-</div>
-
-<div class="row col1">
-<img src="https://picsum.photos/1200/600?2">
-</div>
-
-<div class="row col2">
-<img src="https://picsum.photos/1200/600?3">
-<img src="https://picsum.photos/1200/600?4">
-</div>
-
-<div class="row col1">
-<img src="https://picsum.photos/1200/600?5">
-</div>
-
-<div class="row col1">
-<img src="https://picsum.photos/1200/600?6">
-</div>
-
-</div>
-</div>
-
-</div>
+<script src="vendor/rive-webgl2/rive.js"></script>
+<script>
+  if (window.rive && window.rive.RuntimeLoader) {
+    window.rive.RuntimeLoader.setWasmUrl("vendor/rive-webgl2/rive.wasm");
+  }
+</script>
+<script src="script.js"></script>
 
 </body>
 </html>
