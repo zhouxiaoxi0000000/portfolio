@@ -66,22 +66,30 @@ function initRiveCanvases(scope) {
 
     let instance;
 
-    instance = new rive.Rive({
-      src: canvas.dataset.riveSrc,
-      canvas,
-      artboard: canvas.dataset.riveArtboard,
-      stateMachines: canvas.dataset.riveStateMachine,
-      autoplay: true,
-      useOffscreenRenderer: true,
-      fit: rive.Fit.Contain,
-      alignment: rive.Alignment.Center,
-      onLoad: () => {
-        resizeRiveCanvas(instance);
-        canvas.dataset.riveLoaded = 'true';
-      }
-    });
+    try {
+      instance = new rive.Rive({
+        src: canvas.dataset.riveSrc,
+        canvas,
+        artboard: canvas.dataset.riveArtboard,
+        stateMachines: canvas.dataset.riveStateMachine,
+        autoplay: true,
+        useOffscreenRenderer: true,
+        fit: rive.Fit.Contain,
+        alignment: rive.Alignment.Center,
+        onLoad: () => {
+          resizeRiveCanvas(instance);
+          canvas.dataset.riveLoaded = 'true';
+        },
+        onLoadError: (error) => {
+          canvas.dataset.riveError = error && error.message ? error.message : String(error);
+        }
+      });
 
-    riveInstances.set(canvas, instance);
+      riveInstances.set(canvas, instance);
+    } catch (error) {
+      canvas.dataset.riveError = error && error.message ? error.message : String(error);
+      console.error('Rive init failed', error);
+    }
   });
 }
 
