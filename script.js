@@ -44,6 +44,42 @@ function updateTools(target) {
 }
 
 /* =========================
+   Media stability
+========================= */
+function setImageLoadingHints() {
+  document.querySelectorAll('.tab-content img').forEach(img => {
+    img.loading = img.closest('.tab-content.active') ? 'eager' : 'lazy';
+    img.decoding = 'async';
+  });
+
+  document.querySelectorAll('.tab-content video').forEach(video => {
+    video.preload = video.closest('.tab-content.active') ? 'auto' : 'metadata';
+    video.removeAttribute('autoplay');
+  });
+}
+
+function updateActiveMedia(target) {
+  contents.forEach(content => {
+    const isActive = content.id === target;
+
+    content.querySelectorAll('img').forEach(img => {
+      img.loading = isActive ? 'eager' : 'lazy';
+      img.decoding = 'async';
+    });
+
+    content.querySelectorAll('video').forEach(video => {
+      video.preload = isActive ? 'auto' : 'metadata';
+
+      if (isActive) {
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    });
+  });
+}
+
+/* =========================
    Rive
 ========================= */
 function initRiveCanvases(scope) {
@@ -65,6 +101,11 @@ function initRiveCanvases(scope) {
     }
 
     let instance;
+    const loadTimer = setTimeout(() => {
+      if (canvas.dataset.riveLoaded !== 'true') {
+        canvas.dataset.riveError = 'load-timeout';
+      }
+    }, 5000);
 
     try {
       instance = new rive.Rive({
@@ -77,16 +118,19 @@ function initRiveCanvases(scope) {
         fit: rive.Fit.Contain,
         alignment: rive.Alignment.Center,
         onLoad: () => {
+          clearTimeout(loadTimer);
           resizeRiveCanvas(instance);
           canvas.dataset.riveLoaded = 'true';
         },
         onLoadError: (error) => {
+          clearTimeout(loadTimer);
           canvas.dataset.riveError = error && error.message ? error.message : String(error);
         }
       });
 
       riveInstances.set(canvas, instance);
     } catch (error) {
+      clearTimeout(loadTimer);
       canvas.dataset.riveError = error && error.message ? error.message : String(error);
       console.error('Rive init failed', error);
     }
@@ -122,6 +166,9 @@ tabs.forEach(tab => {
 
     // rive
     initRiveCanvases(target);
+
+    // media
+    updateActiveMedia(target);
   });
 });
 
@@ -215,6 +262,7 @@ window.addEventListener('load', () => {
         if (activeTab) {
           updateTools(activeTab.dataset.tab);
           initRiveCanvases(activeTab.dataset.tab);
+          updateActiveMedia(activeTab.dataset.tab);
         }
 
       });
@@ -223,3 +271,5 @@ window.addEventListener('load', () => {
   });
 
 });
+
+setImageLoadingHints();

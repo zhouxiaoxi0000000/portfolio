@@ -378,6 +378,8 @@ body{
 }
 
 .flowai-rive{
+  position:relative;
+  overflow:hidden;
   background:#303033;
 }
 
