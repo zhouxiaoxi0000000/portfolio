@@ -100,41 +100,98 @@ function initRiveCanvases(scope) {
       return;
     }
 
-    let instance;
-    const loadTimer = setTimeout(() => {
-      if (canvas.dataset.riveLoaded !== 'true') {
-        canvas.dataset.riveError = 'load-timeout';
+    createRiveInstance(canvas);
+  });
+}
+
+function createRiveInstance(canvas) {
+  let instance;
+  const loadTimer = setTimeout(() => {
+    if (canvas.dataset.riveLoaded !== 'true') {
+      canvas.dataset.riveError = 'load-timeout';
+    }
+  }, 5000);
+
+  try {
+    canvas.dataset.riveLoaded = 'false';
+    canvas.dataset.riveExited = 'false';
+    delete canvas.dataset.riveError;
+
+    instance = new rive.Rive({
+      src: canvas.dataset.riveSrc,
+      canvas,
+      artboard: canvas.dataset.riveArtboard,
+      stateMachines: canvas.dataset.riveStateMachine,
+      autoplay: true,
+      autoBind: canvas.dataset.riveAutoBind === 'true',
+      useOffscreenRenderer: true,
+      fit: rive.Fit.Contain,
+      alignment: rive.Alignment.Center,
+      onLoad: () => {
+        clearTimeout(loadTimer);
+        resizeRiveCanvas(instance);
+        canvas.dataset.riveLoaded = 'true';
+        setupRiveClickCycle(canvas);
+      },
+      onLoadError: (error) => {
+        clearTimeout(loadTimer);
+        canvas.dataset.riveError = error && error.message ? error.message : String(error);
       }
-    }, 5000);
+    });
 
-    try {
-      instance = new rive.Rive({
-        src: canvas.dataset.riveSrc,
-        canvas,
-        artboard: canvas.dataset.riveArtboard,
-        stateMachines: canvas.dataset.riveStateMachine,
-        autoplay: true,
-        useOffscreenRenderer: true,
-        fit: rive.Fit.Contain,
-        alignment: rive.Alignment.Center,
-        onLoad: () => {
-          clearTimeout(loadTimer);
-          resizeRiveCanvas(instance);
-          canvas.dataset.riveLoaded = 'true';
-        },
-        onLoadError: (error) => {
-          clearTimeout(loadTimer);
-          canvas.dataset.riveError = error && error.message ? error.message : String(error);
-        }
-      });
+    riveInstances.set(canvas, instance);
+  } catch (error) {
+    clearTimeout(loadTimer);
+    canvas.dataset.riveError = error && error.message ? error.message : String(error);
+    console.error('Rive init failed', error);
+  }
+}
 
-      riveInstances.set(canvas, instance);
-    } catch (error) {
-      clearTimeout(loadTimer);
-      canvas.dataset.riveError = error && error.message ? error.message : String(error);
-      console.error('Rive init failed', error);
+function setupRiveClickCycle(canvas) {
+  if (canvas.dataset.riveClickCycle !== 'exit-reload' || canvas.dataset.riveClickBound === 'true') return;
+
+  canvas.dataset.riveClickBound = 'true';
+  canvas.addEventListener('click', () => {
+    const instance = riveInstances.get(canvas);
+    if (!instance || canvas.dataset.riveLoaded !== 'true') return;
+
+    if (canvas.dataset.riveExited === 'true') {
+      reloadRiveInstance(canvas);
+      return;
+    }
+
+    const triggerName = canvas.dataset.riveExitTrigger || 'exit';
+    if (fireRiveViewModelTrigger(instance, triggerName)) {
+      canvas.dataset.riveExited = 'true';
+    } else {
+      canvas.dataset.riveError = `missing-trigger:${triggerName}`;
     }
   });
+}
+
+function reloadRiveInstance(canvas) {
+  const instance = riveInstances.get(canvas);
+  if (instance && typeof instance.cleanup === 'function') {
+    instance.cleanup();
+  }
+
+  riveInstances.delete(canvas);
+  createRiveInstance(canvas);
+}
+
+function fireRiveViewModelTrigger(instance, triggerName) {
+  const viewModelInstance = instance.viewModelInstance;
+  if (!viewModelInstance || typeof viewModelInstance.trigger !== 'function') return false;
+
+  const propertyNames = Array.isArray(viewModelInstance.properties)
+    ? viewModelInstance.properties.map(property => property.name)
+    : [];
+  const resolvedName = propertyNames.find(name => name.toLowerCase() === triggerName.toLowerCase()) || triggerName;
+  const trigger = viewModelInstance.trigger(resolvedName);
+  if (!trigger || typeof trigger.trigger !== 'function') return false;
+
+  trigger.trigger();
+  return true;
 }
 
 function resizeRiveCanvas(instance) {
