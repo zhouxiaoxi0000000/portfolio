@@ -308,6 +308,11 @@ function resetRecorderRive(autoplay) {
 }
 
 function startRecorderPlayback() {
+  const card = document.querySelector('.recorder-rive-card');
+  if (card) {
+    card.dataset.recorderRunning = 'true';
+  }
+
   recorderState.running = true;
   recorderState.startTime = performance.now();
   resetRecorderOverlays();
@@ -316,6 +321,11 @@ function startRecorderPlayback() {
 }
 
 function stopRecorderPlayback() {
+  const card = document.querySelector('.recorder-rive-card');
+  if (card) {
+    card.dataset.recorderRunning = 'false';
+  }
+
   recorderState.running = false;
 
   if (recorderState.frameId !== null) {
@@ -332,17 +342,17 @@ function setupRecorderToggle() {
   if (!card || card.dataset.recorderToggleBound === 'true') return;
 
   card.dataset.recorderToggleBound = 'true';
-  card.dataset.recorderRunning = 'false';
+  card.dataset.recorderRunning = 'true';
 
   card.addEventListener('click', () => {
     if (recorderState.running) {
-      card.dataset.recorderRunning = 'false';
       stopRecorderPlayback();
     } else {
-      card.dataset.recorderRunning = 'true';
       startRecorderPlayback();
     }
   });
+
+  startRecorderPlayback();
 }
 
 /* =========================
@@ -407,6 +417,7 @@ function createRiveInstance(canvas) {
         requestAnimationFrame(() => applyRiveInputs(instance, canvas));
         setupRiveClickCycle(canvas);
         setupRiveKeepRendering(instance, canvas);
+        scheduleInitialRiveTrigger(instance, canvas);
         firePendingRiveTrigger(instance, canvas);
       },
       onLoadError: (error) => {
@@ -500,8 +511,9 @@ function setupRiveClickCycle(canvas) {
     if (canvas.dataset.riveClickCycle === 'alternate-trigger') {
       const isSecond = canvas.dataset.riveAlternateState === 'second';
       const triggerName = isSecond
-        ? canvas.dataset.riveSecondTrigger || 'enter'
-        : canvas.dataset.riveFirstTrigger || 'exit';
+        ? canvas.dataset.riveSecondTrigger || 'exit'
+        : canvas.dataset.riveFirstTrigger || 'enter';
+      resumeRiveKeepRendering(instance, canvas);
       if (fireRiveTrigger(instance, canvas, triggerName)) {
         canvas.dataset.riveAlternateState = isSecond ? 'first' : 'second';
       } else {
@@ -633,6 +645,104 @@ function firePendingRiveTrigger(instance, canvas) {
   delete canvas.dataset.rivePendingTrigger;
 }
 
+function scheduleInitialRiveTrigger(instance, canvas) {
+  if ((!canvas.dataset.riveInitialTrigger && !canvas.dataset.riveInitialTriggerSequence) || canvas.dataset.riveInitialTriggered === 'true') return;
+
+  canvas.dataset.riveInitialAttempts = '0';
+  const delay = Number(canvas.dataset.riveInitialTriggerDelay || 0);
+  const trigger = () => {
+    if (canvas.dataset.riveInitialTriggerSequence) {
+      fireInitialRiveTriggerSequence(instance, canvas);
+      return;
+    }
+
+    fireInitialRiveTrigger(instance, canvas);
+  };
+
+  if (delay > 0) {
+    window.setTimeout(trigger, delay);
+  } else {
+    requestAnimationFrame(trigger);
+  }
+}
+
+function fireInitialRiveTriggerSequence(instance, canvas) {
+  if (canvas.dataset.riveInitialTriggered === 'true') return;
+
+  const triggers = canvas.dataset.riveInitialTriggerSequence
+    .split(',')
+    .map(name => name.trim())
+    .filter(Boolean);
+  if (!triggers.length) return;
+
+  const gap = Number(canvas.dataset.riveInitialTriggerGap || 0);
+  const delay = Number.isNaN(gap) ? 0 : gap;
+  let index = 0;
+  let failed = false;
+
+  const fireNext = () => {
+    const triggerName = triggers[index];
+    if (!fireRiveTrigger(instance, canvas, triggerName)) {
+      failed = true;
+      canvas.dataset.riveError = `missing-trigger:${triggerName}`;
+      return;
+    }
+
+    index += 1;
+    if (index < triggers.length) {
+      window.setTimeout(fireNext, delay);
+      return;
+    }
+
+    if (!failed) {
+      canvas.dataset.riveInitialTriggered = 'true';
+      delete canvas.dataset.riveInitialAttempts;
+      if (canvas.dataset.riveAlternateInitialState) {
+        canvas.dataset.riveAlternateState = canvas.dataset.riveAlternateInitialState;
+      }
+      stopRiveAfterInitialTrigger(instance, canvas);
+    }
+  };
+
+  fireNext();
+}
+
+function fireInitialRiveTrigger(instance, canvas) {
+  const triggerName = canvas.dataset.riveInitialTrigger;
+  if (!triggerName || canvas.dataset.riveInitialTriggered === 'true') return;
+
+  if (fireRiveTrigger(instance, canvas, triggerName)) {
+    canvas.dataset.riveInitialTriggered = 'true';
+    delete canvas.dataset.riveInitialAttempts;
+    if (canvas.dataset.riveAlternateInitialState) {
+      canvas.dataset.riveAlternateState = canvas.dataset.riveAlternateInitialState;
+    }
+    stopRiveAfterInitialTrigger(instance, canvas);
+  } else {
+    const attempts = Number(canvas.dataset.riveInitialAttempts || 0) + 1;
+    canvas.dataset.riveInitialAttempts = String(attempts);
+
+    if (attempts < 8) {
+      window.setTimeout(() => fireInitialRiveTrigger(instance, canvas), 50);
+    } else {
+      canvas.dataset.riveError = `missing-trigger:${triggerName}`;
+      delete canvas.dataset.riveInitialAttempts;
+    }
+  }
+}
+
+function stopRiveAfterInitialTrigger(instance, canvas) {
+  if (canvas.dataset.riveStopAfterInitialTrigger !== 'true') return;
+
+  const delay = Number(canvas.dataset.riveStopAfterInitialDelay || 0);
+  window.setTimeout(() => {
+    stopRiveKeepRendering(canvas);
+    if (typeof instance.stopRendering === 'function') {
+      instance.stopRendering();
+    }
+  }, Number.isNaN(delay) ? 0 : delay);
+}
+
 function cleanupDeferredRiveCanvas(canvas) {
   const instance = riveInstances.get(canvas);
   stopRiveKeepRendering(canvas);
@@ -761,6 +871,13 @@ function setupRiveKeepRendering(instance, canvas) {
   };
 
   riveRenderFrames.set(canvas, requestAnimationFrame(render));
+}
+
+function resumeRiveKeepRendering(instance, canvas) {
+  resumeRiveRendering(instance);
+  if (canvas.dataset.riveKeepRendering === 'true' && !riveRenderFrames.has(canvas)) {
+    setupRiveKeepRendering(instance, canvas);
+  }
 }
 
 function stopRiveKeepRendering(canvas) {
