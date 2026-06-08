@@ -7,6 +7,14 @@
   box-sizing:border-box;
 }
 
+@font-face{
+  font-family:"GoogleSansFlex";
+  src:url("fonts/GoogleSansFlex_24pt-Regular.woff") format("woff");
+  font-weight:400;
+  font-style:normal;
+  font-display:swap;
+}
+
 /* =========================
    Tokens
 ========================= */
@@ -20,10 +28,10 @@
   --info-left:44px;
   --info-right:36px;
 
-  --font-main:"Roboto",-apple-system,BlinkMacSystemFont,"Microsoft YaHei","PingFang SC",sans-serif;
+  --font-main:"GoogleSansFlex","Microsoft YaHei","PingFang SC",-apple-system,BlinkMacSystemFont,sans-serif;
   --side-padding:10%;
 
-  /* 🔥 关键：防止首帧跳动 */
+  /* 馃敟 鍏抽敭锛氶槻姝㈤甯ц烦鍔?*/
   --tabs-h:88px;
 }
 
@@ -138,22 +146,25 @@ body{
   display:flex;
   align-items:center;
   gap:10px;
+  height:24px;
 }
 
-.name{font-size:20px;}
+.name{
+  font-size:20px;
+  line-height:24px;
+}
 
 .age{
   width:32px;
-  height:22px;
+  height:21px;
   display:flex;
   align-items:center;
   justify-content:center;
   font-size:14px;
+  line-height:1;
   color:#fff;
-  background:#a85f34;
+  background:#7055cf;
   border-radius:6px;
-  position:relative;
-  top:1px;
 }
 
 .logo{
@@ -177,7 +188,7 @@ body{
 }
 
 /* =========================
-   Text System（恢复）
+   Text System锛堟仮澶嶏級
 ========================= */
 .pro-section{
   display:flex;
@@ -264,7 +275,7 @@ body{
   z-index:1;
 
   display:flex;
-  gap:32px;
+  gap:36px;
   align-items:flex-end;
 
   height:32px;
@@ -287,7 +298,7 @@ body{
 .tab.active{color:#fff;}
 
 /* =========================
-   Indicator（最终稳定版）
+   Indicator锛堟渶缁堢ǔ瀹氱増锛?
 ========================= */
 .tab-indicator{
   position:absolute;
@@ -330,7 +341,7 @@ body{
 
 .tools2{
   font-size:12px;
-  font-weight:300;
+  font-weight:400;
   color:#fff;
   opacity:0.4;
   letter-spacing:0.5px;
@@ -385,17 +396,193 @@ body{
 .col4{grid-template-columns:repeat(4,1fr);}
 
 .visual-grid > *{
-  aspect-ratio:720 / 1640;
+  aspect-ratio:360 / 820;
+}
+
+.recorder-rive-card{
+  --design-w:360;
+  --design-h:820;
+  container-type:inline-size;
+  isolation:isolate;
+  position:relative;
+  overflow:hidden;
+  width:100%;
+  height:100%;
+  box-sizing:border-box;
+  background:#fff;
+  cursor:pointer;
+}
+
+.photoai-rive-card{
+  position:relative;
+  background:#131519;
+}
+
+.photoai-logo-card{
+  position:relative;
+  background:#000;
+}
+
+.photoai-logo-rive{
+  position:absolute;
+  z-index:1;
+  height:auto;
+}
+
+.photoai-rive-card > img{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.photoai-rive-layer{
+  position:absolute;
+  z-index:1;
+  height:auto;
+}
+
+.photoai-rive-card > .photoai-rive-layer{
+  height:auto;
+}
+
+/* 360x820 design stack mechanism.
+   All layer variables are 1X visual coordinates in a 360x820 frame.
+   Background assets may be any pixel size; they map to this design frame.
+   For scaled Rive layers, set the visual w/h and --layer-scale. */
+.design-stack{
+  --design-w:360;
+  --design-h:820;
+  position:relative;
+  overflow:hidden;
+  aspect-ratio:var(--design-w) / var(--design-h);
+}
+
+.design-stack-bg{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.design-stack-layer{
+  --layer-scale:1;
+  position:absolute;
+  left:calc((var(--layer-x) + ((var(--layer-w) - (var(--layer-w) / var(--layer-scale))) / 2)) / var(--design-w) * 100%);
+  top:calc(var(--layer-y) / var(--design-h) * 100%);
+  width:calc((var(--layer-w) / var(--layer-scale)) / var(--design-w) * 100%);
+  height:calc((var(--layer-h) / var(--layer-scale)) / var(--design-h) * 100%);
+  transform:scale(var(--layer-scale));
+  transform-origin:center top;
+}
+
+.design-layer{
+  left:calc(var(--layer-x) / var(--design-w) * 100%);
+  top:calc(var(--layer-y) / var(--design-h) * 100%);
+  width:calc(var(--layer-w) / var(--design-w) * 100%);
+  aspect-ratio:var(--layer-w) / var(--layer-h);
+}
+
+.rive-canvas.design-layer{
+  width:calc(var(--layer-w) / var(--design-w) * 100%);
+  height:auto;
 }
 
 .dashboard-grid > *{
   aspect-ratio:auto;
 }
 
+.flowos-stack{
+  --design-w:360;
+  --design-h:820;
+  --rive-scale:2;
+  position:relative;
+  overflow:hidden;
+  background:#050506;
+  aspect-ratio:var(--design-w) / var(--design-h);
+}
+
+.flowos-stack > .flowos-stack-bg{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.flowos-stack > .flowos-stack-rive{
+  position:absolute;
+  z-index:2;
+  left:calc(98 / var(--design-w) * 100%);
+  top:calc(102 / var(--design-h) * 100%);
+  width:calc(164 / var(--design-w) * 100%);
+  height:calc(77 / var(--design-h) * 100%);
+  transform:scale(var(--rive-scale));
+  transform-origin:center top;
+}
+
+.flowos-stack > .flowos-stack-top{
+  position:absolute;
+  z-index:3;
+  left:calc(56.5 / var(--design-w) * 100%);
+  top:calc(124.5 / var(--design-h) * 100%);
+  width:calc(247 / var(--design-w) * 100%);
+  height:calc(109 / var(--design-h) * 100%);
+  object-fit:contain;
+  pointer-events:none;
+}
 .flowai-rive{
   position:relative;
   overflow:hidden;
   background:#303033;
+}
+
+.flowai-stretch{
+  width:100%;
+  height:100%;
+  object-fit:fill;
+}
+
+.flowai-helper{
+  position:relative;
+  overflow:hidden;
+  background:#000;
+  cursor:pointer;
+}
+
+.flowai-helper-bg{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:fill;
+}
+
+.flowai-helper > .flowai-helper-rive{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  width:100%;
+  height:100%;
+}
+
+.flowai-helper > .flowai-helper-rive[data-rive-defer="true"],
+.flowai-rive > .rive-canvas[data-rive-defer="true"]{
+  opacity:0;
+  visibility:hidden;
+}
+
+.flowai-helper > .flowai-helper-rive[data-rive-visible="true"],
+.flowai-rive > .rive-canvas[data-rive-visible="true"]{
+  opacity:1;
+  visibility:visible;
 }
 
 .flowai-marquee{
@@ -485,6 +672,132 @@ body{
   cursor:pointer;
 }
 
+.recorder-rive-card > .recorder-rive-layer{
+  position:absolute;
+  z-index:0;
+  left:0;
+  bottom:calc(285 / var(--design-h) * 100%);
+  width:100%;
+  height:calc(250 / var(--design-h) * 100%);
+}
+
+.recorder-rive-card > .recorder-standard-layer{
+  position:absolute;
+  left:calc(24 / var(--design-w) * 100%);
+  top:calc(52 / var(--design-h) * 100%);
+  z-index:2;
+  width:calc(114 / var(--design-w) * 100%);
+  height:auto;
+  object-fit:contain;
+}
+
+.recorder-rive-card > .recorder-timer{
+  position:absolute;
+  left:0;
+  top:calc(144 / var(--design-h) * 100%);
+  z-index:2;
+  width:100%;
+  color:#BCBCBC;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:"GoogleSansFlex",var(--font-main);
+  font-size:calc(50 / var(--design-w) * 100cqw);
+  font-weight:300;
+  line-height:1;
+  letter-spacing:0;
+  text-align:center;
+  white-space:nowrap;
+  pointer-events:none;
+}
+
+.recorder-timer .timer-char{
+  flex:0 0 auto;
+  color:#BCBCBC;
+  display:block;
+  text-align:center;
+}
+
+.recorder-timer .timer-number{
+  width:0.62em;
+}
+
+.recorder-timer .timer-separator{
+  width:0.3em;
+}
+
+.recorder-timer .timer-colon{
+  display:block;
+  transform:translateY(calc(-3 / var(--design-w) * 100cqw));
+}
+
+.recorder-timer .timer-char.is-active{
+  color:#000;
+}
+
+.recorder-rive-card > .recorder-tick-track{
+  position:absolute;
+  left:50%;
+  bottom:calc((285 + 250) / var(--design-h) * 100%);
+  z-index:2;
+  width:0;
+  height:calc(8 / var(--design-w) * 100cqw);
+  pointer-events:none;
+}
+
+.recorder-tick-track > span{
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:calc(1 / var(--design-w) * 100cqw);
+  height:calc(4 / var(--design-w) * 100cqw);
+  background:#CCCCCC;
+  transform:translateX(calc(var(--tick-x, 0) / var(--design-w) * 100cqw)) translateX(-50%);
+}
+
+.recorder-tick-track > span.is-major{
+  height:calc(8 / var(--design-w) * 100cqw);
+  background:#ADADAD;
+}
+
+.recorder-rive-card > .recorder-mini-time-track{
+  position:absolute;
+  left:50%;
+  top:calc(265 / var(--design-h) * 100%);
+  z-index:2;
+  width:0;
+  height:calc(12 / var(--design-w) * 100cqw);
+  color:#ADADAD;
+  font-family:"GoogleSansFlex",var(--font-main);
+  font-size:calc(12 / var(--design-w) * 100cqw);
+  font-weight:300;
+  line-height:1;
+  letter-spacing:0;
+  white-space:nowrap;
+  pointer-events:none;
+  will-change:transform;
+}
+
+.recorder-mini-time-track > span{
+  position:absolute;
+  left:0;
+  top:0;
+  min-width:calc(38 / var(--design-w) * 100cqw);
+  color:#ADADAD;
+  text-align:center;
+  transform:translateX(calc(var(--time-x, 0) / var(--design-w) * 100cqw)) translateX(-50%);
+}
+
+.recorder-rive-card > .recorder-launch-layer{
+  position:absolute;
+  left:calc(112 / var(--design-w) * 100%);
+  bottom:0;
+  z-index:2;
+  width:calc(136 / var(--design-w) * 100%);
+  height:auto;
+  object-fit:contain;
+}
+
 .visual-placeholder{
   min-height:0;
   background:
@@ -492,3 +805,4 @@ body{
     #303033;
   border:1px solid rgba(255,255,255,0.08);
 }
+

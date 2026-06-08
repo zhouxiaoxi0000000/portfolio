@@ -1,10 +1,15 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Portfolio</title>
-<link rel="stylesheet" href="style.css">
+<link rel="preload" href="vendor/rive-webgl2/rive.wasm" as="fetch" type="application/wasm" crossorigin>
+<link rel="preload" href=".riv/flowos_ai2.riv" as="fetch" fetchpriority="high">
+<link rel="preload" href=".riv/lightField.riv" as="fetch" fetchpriority="high">
+<link rel="preload" href=".riv/phaseAudio.riv" as="fetch" fetchpriority="high">
+<link rel="preload" href=".riv/aieditor.riv" as="fetch" fetchpriority="high">
+  <link rel="stylesheet" href="style.css?v=20260607-recorder-timeline-scroll-50">
 </head>
 
 <body>
@@ -110,8 +115,8 @@
 
           <div class="tabs-track">
             <div class="tab active" data-tab="flowai">FlowAI</div>
-            <div class="tab" data-tab="canvasai">CanvasAI</div>
-            <div class="tab" data-tab="visual">RecordAI</div>
+            <div class="tab" data-tab="canvasai">PhotoAI</div>
+            <div class="tab" data-tab="visual">RecorderAI</div>
             <div class="tab" data-tab="camera">Camera</div>
             <div class="tab" data-tab="ux">红魔动效</div>
             <div class="tab" data-tab="ui">游戏时间UI</div>
@@ -341,9 +346,9 @@
           </div>
         </div>
 
-        <!-- RecordAI -->
+        <!-- RecorderAI -->
         <div class="tools" data-tools="visual">
-          <div class="tools2">RecordAI</div>
+          <div class="tools2">RecorderAI</div>
         </div>
 
         <div class="gallery tab-content" id="visual">
@@ -351,7 +356,22 @@
             <img src="img/Record00.png" alt="">
             <img src="img/Record01.png" alt="">
             <img src="img/Record02.png" alt="">
-            <img src="img/Record03.png" alt="">
+            <div class="recorder-rive-card">
+              <canvas
+                class="rive-canvas recorder-rive-layer"
+                data-rive-src=".riv/recorder.riv"
+                data-rive-artboard="voice"
+                data-rive-state-machine="voice"
+                data-rive-offscreen="false"
+                data-rive-fit="fill"
+                data-rive-autoplay="false"
+              ></canvas>
+              <img class="recorder-standard-layer" src="img/standard.png" alt="">
+              <div class="recorder-timer" aria-label="00:00.00">00:00.00</div>
+              <div class="recorder-tick-track" aria-hidden="true"></div>
+              <div class="recorder-mini-time-track" aria-hidden="true"></div>
+              <img class="recorder-launch-layer" src="img/launch.png" alt="">
+            </div>
             <img src="img/Record04.png" alt="">
             <img src="img/Record05.png" alt="">
             <img src="img/Record06.png" alt="">
@@ -472,23 +492,32 @@
           </div>
 
           <div class="row col4 visual-grid flowai-grid">
-            <div class="flowai-rive">
-              <canvas
-                class="rive-canvas"
-                data-rive-src=".riv/flowos_ai.riv"
-                data-rive-artboard="FlowosAi"
-                data-rive-state-machine="State Machine 1"
-              ></canvas>
-            </div>
-            <div class="flowai-rive">
-              <canvas
-                class="rive-canvas"
-                data-rive-src=".riv/glow.riv"
-                data-rive-artboard="cccc"
-                data-rive-state-machine="cccc"
-              ></canvas>
-            </div>
             <img src="img/H01.png" alt="">
+            <div class="flowai-rive">
+              <canvas
+                class="rive-canvas"
+                data-rive-src=".riv/lightField.riv"
+                data-rive-artboard="L2"
+                data-rive-state-machine="L2"
+                data-rive-click-cycle="next-trigger"
+                data-rive-next-trigger="nex"
+                data-rive-keep-rendering="true"
+              ></canvas>
+            </div>
+            <div class="flowai-rive">
+              <canvas
+                class="rive-canvas"
+                data-rive-src=".riv/lightField.riv"
+                data-rive-artboard="L2"
+                data-rive-state-machine="L2"
+                data-rive-autoplay="false"
+                data-rive-defer="true"
+                data-rive-click-cycle="alternate-trigger"
+                data-rive-first-trigger="enter"
+                data-rive-second-trigger="exit"
+                data-rive-keep-rendering="true"
+              ></canvas>
+            </div>
             <div class="flowai-rive">
               <canvas
                 class="rive-canvas"
@@ -499,6 +528,15 @@
                 data-rive-click-cycle="exit-reload"
                 data-rive-exit-trigger="exit"
               ></canvas>
+            </div>
+            <div class="flowos-stack" aria-label="FlowOS AI preview">
+              <img class="flowos-stack-bg" src="img/flowos1.webp" alt="">
+              <canvas
+                class="rive-canvas flowos-stack-rive"
+                data-rive-src=".riv/flowos_ai2.riv"
+                data-rive-fit="contain"
+              ></canvas>
+              <img class="flowos-stack-top" src="img/flowos2.webp" alt="">
             </div>
             <img src="img/H03.png" alt="">
             <img src="img/H04.png" alt="">
@@ -511,16 +549,49 @@
           </div>
         </div>
 
-        <!-- CanvasAI -->
+        <!-- PhotoAI -->
         <div class="tools" data-tools="canvasai">
-          <div class="tools2">CanvasAI</div>
+          <div class="tools2">PhotoAI</div>
         </div>
 
         <div class="gallery tab-content" id="canvasai">
           <div class="row col4 visual-grid canvasai-grid">
-            <img src="img/AICanvas00.png" alt="">
-            <img src="img/AICanvas01.png" alt="">
-            <img src="img/AICanvas02.png" alt="">
+            <div class="photoai-logo-card">
+              <canvas
+                class="rive-canvas photoai-logo-rive design-layer"
+                data-rive-src=".riv/aieditor.riv"
+                data-rive-artboard="canvasLogo2"
+                data-rive-state-machine="canvasLogo2"
+                data-rive-offscreen="false"
+                data-rive-fit="cover"
+                style="--design-w:720;--design-h:1640;--layer-x:252;--layer-y:712;--layer-w:216;--layer-h:216;"
+              ></canvas>
+            </div>
+            <img src="img/AIPhoto03.webp" alt="">
+            <div class="photoai-rive-card">
+              <canvas
+                class="rive-canvas photoai-rive-layer design-layer"
+                data-rive-src=".riv/aieditor.riv"
+                data-rive-artboard="botle"
+                data-rive-state-machine="State Machine 1"
+                data-rive-offscreen="false"
+                style="--design-w:720;--design-h:1640;--layer-x:0;--layer-y:36;--layer-w:720;--layer-h:916;"
+              ></canvas>
+              <img src="img/AIPhoto02.webp" alt="">
+            </div>
+            <div class="photoai-rive-card">
+              <canvas
+                class="rive-canvas photoai-rive-layer design-layer"
+                data-rive-src=".riv/aieditor.riv"
+                data-rive-artboard="botle2"
+                data-rive-state-machine="botle2"
+                data-rive-inputs="particles2Count:25"
+                data-rive-auto-bind="true"
+                data-rive-offscreen="false"
+                style="--design-w:720;--design-h:1640;--layer-x:0;--layer-y:36;--layer-w:720;--layer-h:916;"
+              ></canvas>
+              <img src="img/AIPhoto01.webp" alt="">
+            </div>
             <img src="img/AICanvas03.png" alt="">
             <img src="img/AICanvas04.png" alt="">
             <img src="img/AICanvas05.png" alt="">
@@ -551,19 +622,19 @@
             <video autoplay loop muted playsinline>
               <source src="video/HOME01.WEBM" type="video/webm">
             </video>
-            <img src="img/Home02.png" alt="">
-            <img src="img/Home03.png" alt="">
-            <img src="img/Home04.png" alt="">
-            <img src="img/Home05.png" alt="">
-            <img src="img/Home06.png" alt="">
-            <img src="img/Home07.png" alt="">
-            <img src="img/Home08.png" alt="">
-            <img src="img/Home09.png" alt="">
-            <img src="img/Home10.png" alt="">
-            <img src="img/Home11.png" alt="">
-            <img src="img/Home12.png" alt="">
-            <img src="img/Home13.png" alt="">
-            <img src="img/Home14.png" alt="">
+            <img src="img/Home02.webp" alt="">
+            <img src="img/Home03.webp" alt="">
+            <img src="img/Home04.webp" alt="">
+            <img src="img/Home05.webp" alt="">
+            <img src="img/Home06.webp" alt="">
+            <img src="img/Home07.webp" alt="">
+            <img src="img/Home08.webp" alt="">
+            <img src="img/Home09.webp" alt="">
+            <img src="img/Home10.webp" alt="">
+            <img src="img/Home11.webp" alt="">
+            <img src="img/Home12.webp" alt="">
+            <img src="img/Home13.webp" alt="">
+            <img src="img/Home14.webp" alt="">
           </div>
         </div>
 
@@ -580,7 +651,8 @@
     window.rive.RuntimeLoader.setWasmUrl("vendor/rive-webgl2/rive.wasm");
   }
 </script>
-<script src="script.js"></script>
+<script src="script.js?v=20260607-recorder-timeline-scroll-50"></script>
 
 </body>
 </html>
+
